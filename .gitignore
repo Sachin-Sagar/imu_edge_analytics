@@ -38,3 +38,5 @@ htmlcov/
 
 # Local logs
 *.log
+
+archive/
