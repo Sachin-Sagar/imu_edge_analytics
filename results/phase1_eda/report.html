@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Phase 1 Summary: Exploratory Data Analysis (EDA)</title>
+<style>
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.6;
+    color: #24292e;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    background: #fdfdfd;
+}
+h1, h2, h3, h4 {
+    color: #1a1a1a;
+    margin-top: 1.5em;
+    margin-bottom: 0.5em;
+    border-bottom: 1px solid #eaecef;
+    padding-bottom: 0.3em;
+}
+h1 {
+    border-bottom: 2px solid #2b5c8f;
+    color: #2b5c8f;
+    font-size: 2.2em;
+}
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 20px 0;
+    font-size: 0.95em;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    background: #fff;
+}
+th, td {
+    border: 1px solid #dfe2e5;
+    padding: 10px 14px;
+    text-align: left;
+}
+th {
+    background-color: #f6f8fa;
+    font-weight: 600;
+}
+tr:nth-child(even) {
+    background-color: #fcfcfc;
+}
+code {
+    background: #f0f3f6;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
+    font-size: 0.9em;
+}
+pre code {
+    display: block;
+    padding: 12px;
+    overflow-x: auto;
+    background: #282c34;
+    color: #abb2bf;
+    border-radius: 6px;
+}
+img {
+    max-width: 100%;
+    height: auto;
+    border: 1px solid #e1e4e8;
+    border-radius: 6px;
+    margin: 15px 0;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+}
+blockquote {
+    border-left: 4px solid #2b5c8f;
+    padding: 10px 20px;
+    margin: 20px 0;
+    color: #555;
+    background: #f4f8fb;
+    border-radius: 0 6px 6px 0;
+}
+.metric-card {
+    background: #fff;
+    border: 1px solid #e1e4e8;
+    border-radius: 8px;
+    padding: 18px;
+    margin: 15px 0;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+</style>
+<script>
+MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\\(', '\\)']],
+    displayMath: [['$$', '$$'], ['\\[', '\\]']],
+    processEscapes: true
+  }
+};
+</script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+<h1>Phase 1: Exploratory Data Analysis &amp; Sensor Hygiene Summary</h1>
+<p><strong>Project</strong>: Motocross Jump Analytics &amp; Signal Processing Engine<br />
+<strong>Dataset</strong>: <code>mx_imu.csv</code> ($N = 45,000$ samples, $90.00\,\text{s}$ @ $500.0\,\text{Hz}$)<br />
+<strong>Deliverable Directory</strong>: <code>results/phase1_eda/</code>  </p>
+<hr />
+<h2>1. Executive Summary &amp; Core Findings</h2>
+<ol>
+<li><strong>Sampling Regularity &amp; Clock Stability</strong>:</li>
+<li>The IMU sampled at an exact Output Data Rate of $500.00\,\text{Hz}$ (mean $\Delta t = 2.000\,\text{ms}$, zero clock drift across 90 seconds).</li>
+<li><strong>Sensor Dropout Isolation &amp; Repair</strong>:</li>
+<li>A single contiguous communication dropout occurred at $t \in [23.000, 23.398]\,\text{s}$ ($200$ samples, $0.400\,\text{s}$).</li>
+<li>The dropout occurred during a steady ground straightaway and was reconstructed using linear interpolation without introducing spectral distortion.</li>
+<li><strong>Bimodal Kinematic Distribution</strong>:</li>
+<li>Vertical acceleration $a_z$ exhibits clear bimodal separation: nominal ground baseline at $9.81\,\text{m/s}^2$ vs. near-zero free-fall during airborne flight ($&lt;3.5\,\text{m/s}^2$).</li>
+<li><strong>2-Stroke Engine Noise Ingress</strong>:</li>
+<li>Discrete spectral spikes at $58.11\,\text{Hz}$ ($3,487\,\text{RPM}$) and $116.21\,\text{Hz}$ (2nd harmonic) dominate the accelerometer signals.</li>
+<li>The vibration is polarized in the sagittal plane ($56.7^\circ$ cylinder tilt, $r_{xz} = 0.985$), while the gyroscope is completely immune (noise floor $-65.3\,\text{dB/Hz}$).</li>
+<li><strong>Post-Jump 4 Yaw Rate Drift &amp; MEMS Shock Relaxation</strong>:</li>
+<li>Following the intense touchdown shock of Jump 4 ($t = 60.200\,\text{s}$, $18.04\,\text{m/s}^2$), yaw angular rate $\omega_z$ drifts upward from $0.00\,\text{rad/s}$ to an asymptotic plateau of $+0.445\,\text{rad/s}$ ($+25.5^\circ/\text{s}$), accumulating $&gt;528^\circ$ of heading error by $t = 90\,\text{s}$.</li>
+<li>Modeled as a first-order viscoelastic stress relaxation in the MEMS package ($\tau \approx 9.50\,\text{s}$, $R^2 = 0.9825$), confirmed by persistent $+0.374\,\text{rad/s}$ yaw rate during Jump 5 free-fall flight.</li>
+</ol>
+<hr />
+<h2>2. Statistical Distribution Properties of 6-Axis IMU</h2>
+<table>
+<thead>
+<tr>
+<th>Channel</th>
+<th style="text-align: center;">Unit</th>
+<th style="text-align: center;">Mean</th>
+<th style="text-align: center;">Std</th>
+<th style="text-align: center;">Median</th>
+<th style="text-align: center;">IQR</th>
+<th style="text-align: center;">Min</th>
+<th style="text-align: center;">Max</th>
+<th style="text-align: center;">Skewness</th>
+<th style="text-align: center;">Excess Kurtosis</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>accel_x</strong></td>
+<td style="text-align: center;">$\text{m/s}^2$</td>
+<td style="text-align: center;">$0.000$</td>
+<td style="text-align: center;">$0.101$</td>
+<td style="text-align: center;">$0.000$</td>
+<td style="text-align: center;">$0.098$</td>
+<td style="text-align: center;">$-0.334$</td>
+<td style="text-align: center;">$0.329$</td>
+<td style="text-align: center;">$0.021$</td>
+<td style="text-align: center;">$1.428$</td>
+</tr>
+<tr>
+<td><strong>accel_y</strong></td>
+<td style="text-align: center;">$\text{m/s}^2$</td>
+<td style="text-align: center;">$0.000$</td>
+<td style="text-align: center;">$0.060$</td>
+<td style="text-align: center;">$0.000$</td>
+<td style="text-align: center;">$0.058$</td>
+<td style="text-align: center;">$-0.205$</td>
+<td style="text-align: center;">$0.213$</td>
+<td style="text-align: center;">$-0.014$</td>
+<td style="text-align: center;">$1.152$</td>
+</tr>
+<tr>
+<td><strong>accel_z</strong></td>
+<td style="text-align: center;">$\text{m/s}^2$</td>
+<td style="text-align: center;">$7.817$</td>
+<td style="text-align: center;">$3.966$</td>
+<td style="text-align: center;">$9.821$</td>
+<td style="text-align: center;">$2.140$</td>
+<td style="text-align: center;">$-0.469$</td>
+<td style="text-align: center;">$18.659$</td>
+<td style="text-align: center;">$-1.184$</td>
+<td style="text-align: center;">$0.412$</td>
+</tr>
+<tr>
+<td><strong>gyro_x</strong></td>
+<td style="text-align: center;">$\text{rad/s}$</td>
+<td style="text-align: center;">$-0.000$</td>
+<td style="text-align: center;">$0.036$</td>
+<td style="text-align: center;">$-0.000$</td>
+<td style="text-align: center;">$0.032$</td>
+<td style="text-align: center;">$-0.073$</td>
+<td style="text-align: center;">$0.071$</td>
+<td style="text-align: center;">$0.012$</td>
+<td style="text-align: center;">$0.844$</td>
+</tr>
+<tr>
+<td><strong>gyro_y</strong></td>
+<td style="text-align: center;">$\text{rad/s}$</td>
+<td style="text-align: center;">$0.118$</td>
+<td style="text-align: center;">$0.655$</td>
+<td style="text-align: center;">$0.000$</td>
+<td style="text-align: center;">$0.240$</td>
+<td style="text-align: center;">$-0.049$</td>
+<td style="text-align: center;">$8.000$</td>
+<td style="text-align: center;">$4.218$</td>
+<td style="text-align: center;">$22.140$</td>
+</tr>
+<tr>
+<td><strong>gyro_z</strong></td>
+<td style="text-align: center;">$\text{rad/s}$</td>
+<td style="text-align: center;">$0.102$</td>
+<td style="text-align: center;">$0.160$</td>
+<td style="text-align: center;">$0.050$</td>
+<td style="text-align: center;">$0.180$</td>
+<td style="text-align: center;">$-0.035$</td>
+<td style="text-align: center;">$0.454$</td>
+<td style="text-align: center;">$1.280$</td>
+<td style="text-align: center;">$1.980$</td>
+</tr>
+</tbody>
+</table>
+<p><em>Summary dataset saved in <a href="channel_summary_statistics.csv"><code>results/phase1_eda/channel_summary_statistics.csv</code></a>.</em></p>
+<hr />
+<h2>3. Sensor Dropout Inspection &amp; Repair</h2>
+<p><img alt="Sensor Dropout Inspection" src="plots/02_sensor_dropout_inspection.png" /><br />
+<em>Figure 1: Inspection of the 0.400s (200-sample) sensor dropout packet at $t \in [23.0, 23.4]\,\text{s}$ before and after linear interpolation.</em></p>
+<ul>
+<li><strong>Missing Window</strong>: $t_{\text{start}} = 23.000\,\text{s}$, $t_{\text{end}} = 23.398\,\text{s}$</li>
+<li><strong>Samples Missing</strong>: $200$ samples ($0.444\%$ of total dataset)</li>
+<li><strong>Signal Continuity</strong>: Preserved with zero phase offset across the boundary.</li>
+<li><em>Detailed metrics stored in <a href="sensor_dropout_metrics.json"><code>results/phase1_eda/sensor_dropout_metrics.json</code></a>.</em></li>
+</ul>
+<hr />
+<h2>4. 2-Stroke Engine Noise Characterization &amp; Gyroscope Immunity</h2>
+<p><img alt="Engine Noise 6-Axis PSD" src="plots/06_engine_noise_psd_6axis.png" /><br />
+<em>Figure 2: Power Spectral Density across all 6 IMU axes highlighting the $58.11\,\text{Hz}$ engine fundamental and $116.21\,\text{Hz}$ harmonic.</em></p>
+<p><img alt="Engine Vibration Kinematics Polar" src="plots/08_engine_vibration_kinematics_polar.png" /><br />
+<em>Figure 3: Spatial polarization of engine vibration in the sagittal plane ($56.7^\circ$ cylinder tilt angle).</em></p>
+<ul>
+<li><strong>Vibration Tones</strong>: $f_1 = 58.11\,\text{Hz}$ ($-21.11\,\text{dB/Hz}$ on $a_z$), $f_2 = 116.21\,\text{Hz}$ ($-27.83\,\text{dB/Hz}$ on $a_z$).</li>
+<li><strong>Sagittal Correlation</strong>: $r(a_x, a_z) = 0.985$, while lateral $a_y$ is suppressed by $&gt;18\,\text{dB}$.</li>
+<li><strong>Gyroscope Floor</strong>: Flat white noise floor at $-65.3\,\text{dB/Hz}$ with complete immunity to engine vibration harmonics.</li>
+<li><em>Detailed metrics stored in <a href="engine_vibration_metrics.json"><code>results/phase1_eda/engine_vibration_metrics.json</code></a>.</em></li>
+</ul>
+<hr />
+<h2>5. Post-Jump 4 Yaw Rate Drift &amp; MEMS Gyroscope Shock Relaxation</h2>
+<p>Following Jump 4 landing impact ($t = 60.200\,\text{s}$, $a_z = 18.04\,\text{m/s}^2$), yaw angular rate $\omega_z$ transitions from zero-mean ground riding to a persistent positive upward drift, reaching $\approx +0.43\,\text{rad/s}$ ($+24.6^\circ/\text{s}$) by session end:</p>
+<ol>
+<li><strong>Dual Contributing Mechanisms</strong>:</li>
+<li><strong>Track Berm Curvature</strong>: The motorcycle enters a wide sweeping banked turn redirecting towards Jump 5.</li>
+<li><strong>MEMS Shock-Induced ZRO Drift</strong>: Severe impact shock alters the mechanical stress state of the resonant capacitive tuning-fork anchors, shifting the demodulator's zero-rate baseline.</li>
+<li><strong>First-Order Stress Relaxation Model</strong>:<br />
+   $$\omega_z(t) \approx A \cdot \left( 1 - e^{-(t - t_0)/\tau} \right), \quad t \ge t_0 = 60.200\,\text{s}$$</li>
+<li>Asymptotic bias offset: $A = \mathbf{+0.445\,\text{rad/s}}$ ($+25.5^\circ/\text{s}$)</li>
+<li>Relaxation time constant: $\tau = \mathbf{9.50\,\text{s}}$</li>
+<li>Model fit accuracy: $\mathbf{R^2 = 0.9825}$, $\text{RMSE} = 0.0150\,\text{rad/s}$</li>
+<li><strong>In-Flight Confirmation During Jump 5</strong>:</li>
+<li>During Jump 5 ballistic flight ($t \in [77.0, 79.8]\,\text{s}$), external turning forces vanish ($a_y \approx 0, a_z \approx 0$), yet $\omega_z$ remains locked at $+0.374\,\text{rad/s}$ (vs. $+0.358\,\text{rad/s}$ pre-takeoff ground value), proving the signal represents internal sensor ZRO bias drift.</li>
+<li><strong>Attitude Fusion Implications</strong>:</li>
+<li>Unlike pitch and roll (bounded by static gravity vector $\mathbf{g}$), yaw rotates around gravity and is mathematically unobservable in a 6-axis IMU without an external magnetometer or GPS, accumulating $&gt;528^\circ$ heading error.</li>
+<li>Because jump detection (Objective 1) and filtering (Objective 2) operate strictly on accelerometers, this drift introduces zero error into jump detection or flight timing.</li>
+</ol>
+<hr />
+<h2>6. Artifacts and Deliverables in this Directory</h2>
+<ul>
+<li><code>plots/</code>: 8 publication-grade figures (300 DPI):</li>
+<li><code>01_full_session_overview.png</code>: Full 90-second session 6-axis telemetry.</li>
+<li><code>02_sensor_dropout_inspection.png</code>: 0.400s sensor gap detection &amp; interpolation.</li>
+<li><code>03_ground_vs_air_distributions.png</code>: Bimodal gravity vs. free-fall separation.</li>
+<li><code>04_imu_correlation_matrix.png</code>: Heatmap of cross-channel correlations.</li>
+<li><code>05_phase_plane_trajectories.png</code>: Accelerometer-gyroscope phase portraits.</li>
+<li><code>06_engine_noise_psd_6axis.png</code>: Ground PSD across all 6 channels.</li>
+<li><code>07_engine_noise_spectrogram_waterfall.png</code>: Time-frequency spectrogram of engine ingress.</li>
+<li><code>08_engine_vibration_kinematics_polar.png</code>: Sagittal plane polarization ($56.7^\circ$).</li>
+<li><code>channel_summary_statistics.csv</code>: Complete statistical distribution metrics.</li>
+<li><code>channel_correlation_matrix.csv</code>: Pearson cross-channel correlation matrix.</li>
+<li><code>sensor_dropout_metrics.json</code>: Machine-readable dropout diagnostics.</li>
+<li><code>engine_vibration_metrics.json</code>: Machine-readable vibration parameters.</li>
+<li><code>report.html</code>: Standalone rendered HTML summary with MathJax.</li>
+</ul>
+</body>
+</html>

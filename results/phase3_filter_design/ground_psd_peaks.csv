@@ -1,0 +1,7 @@
+channel,label,unit,f_fund_hz,psd_fund_raw,psd_fund_db,f_harm_hz,psd_harm_raw,psd_harm_db
+accel_x,$a_x$ (Forward),m/s^2,58.11,0.0032762,-24.85,116.21,0.00071841,-31.44
+accel_y,$a_y$ (Lateral),m/s^2,63.96,9.8577e-06,-50.06,120.12,8.6098e-06,-50.65
+accel_z,$a_z$ (Vertical),m/s^2,58.11,0.0077394,-21.11,116.21,0.0016486,-27.83
+gyro_x,$\omega_x$ (Roll),rad/s,63.96,2.9209e-07,-65.34,120.61,3.7495e-07,-64.26
+gyro_y,$\omega_y$ (Pitch),rad/s,62.5,2.7993e-07,-65.53,121.58,1.8413e-07,-67.35
+gyro_z,$\omega_z$ (Yaw),rad/s,64.94,1.474e-07,-68.32,119.63,1.3438e-07,-68.72

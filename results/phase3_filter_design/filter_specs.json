@@ -1,0 +1,130 @@
+{
+  "filter_type": "Butterworth Low-Pass (Biquad Second-Order Sections)",
+  "sampling_frequency_hz": 500.0,
+  "cutoff_frequency_hz": 25.0,
+  "order": 4,
+  "num_sections": 2,
+  "sos_coefficients": [
+    {
+      "section": 1,
+      "b": [
+        0.019036831587823877,
+        0.038073663175647754,
+        0.019036831587823877
+      ],
+      "a": [
+        1.0,
+        -1.4796742169311932,
+        0.5558215432824888
+      ]
+    },
+    {
+      "section": 2,
+      "b": [
+        0.021883851967943024,
+        0.04376770393588605,
+        0.021883851967943024
+      ],
+      "a": [
+        1.0,
+        -1.7009643319435255,
+        0.7884997398152976
+      ]
+    }
+  ],
+  "dc_gain": 1.0,
+  "prewarped_analog_cutoff_rad_s": 158.38444,
+  "frequency_evaluation": [
+    {
+      "frequency_hz": 0.0,
+      "attenuation_db_causal": -0.0,
+      "attenuation_db_zerophase": -0.0,
+      "phase_deg_causal": 0.0,
+      "group_delay_ms_causal": 16.6
+    },
+    {
+      "frequency_hz": 5.0,
+      "attenuation_db_causal": -0.0,
+      "attenuation_db_zerophase": -0.0,
+      "phase_deg_causal": -29.87,
+      "group_delay_ms_causal": 16.92
+    },
+    {
+      "frequency_hz": 10.0,
+      "attenuation_db_causal": -0.003,
+      "attenuation_db_zerophase": -0.005,
+      "phase_deg_causal": -60.92,
+      "group_delay_ms_causal": 18.11
+    },
+    {
+      "frequency_hz": 15.0,
+      "attenuation_db_causal": -0.069,
+      "attenuation_db_zerophase": -0.139,
+      "phase_deg_causal": -95.08,
+      "group_delay_ms_causal": 20.67
+    },
+    {
+      "frequency_hz": 20.0,
+      "attenuation_db_causal": -0.659,
+      "attenuation_db_zerophase": -1.318,
+      "phase_deg_causal": -135.34,
+      "group_delay_ms_causal": 23.59
+    },
+    {
+      "frequency_hz": 25.0,
+      "attenuation_db_causal": -3.01,
+      "attenuation_db_zerophase": -6.021,
+      "phase_deg_causal": -180.0,
+      "group_delay_ms_causal": 22.82
+    },
+    {
+      "frequency_hz": 30.0,
+      "attenuation_db_causal": -7.346,
+      "attenuation_db_zerophase": -14.693,
+      "phase_deg_causal": -217.5,
+      "group_delay_ms_causal": 15.04
+    },
+    {
+      "frequency_hz": 40.0,
+      "attenuation_db_causal": -16.875,
+      "attenuation_db_zerophase": -33.75,
+      "phase_deg_causal": -261.21,
+      "group_delay_ms_causal": 7.79
+    },
+    {
+      "frequency_hz": 58.11,
+      "attenuation_db_causal": -30.615,
+      "attenuation_db_zerophase": -61.23,
+      "phase_deg_causal": -296.3,
+      "group_delay_ms_causal": 3.05
+    },
+    {
+      "frequency_hz": 100.0,
+      "attenuation_db_causal": -52.924,
+      "attenuation_db_zerophase": -105.848,
+      "phase_deg_causal": -327.14,
+      "group_delay_ms_causal": 1.77
+    },
+    {
+      "frequency_hz": 116.21,
+      "attenuation_db_causal": -60.177,
+      "attenuation_db_zerophase": -120.355,
+      "phase_deg_causal": -333.39,
+      "group_delay_ms_causal": 0.7
+    },
+    {
+      "frequency_hz": 200.0,
+      "attenuation_db_causal": -103.081,
+      "attenuation_db_zerophase": -206.162,
+      "phase_deg_causal": -352.29,
+      "group_delay_ms_causal": 0.55
+    },
+    {
+      "frequency_hz": 249.9,
+      "attenuation_db_causal": -320.169,
+      "attenuation_db_zerophase": -640.337,
+      "phase_deg_causal": -359.99,
+      "group_delay_ms_causal": 0.43
+    }
+  ]
+}

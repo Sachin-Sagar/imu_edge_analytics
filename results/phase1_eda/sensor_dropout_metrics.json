@@ -1,0 +1,17 @@
+{
+  "dropout_detection": {
+    "start_time_s": 23.0,
+    "end_time_s": 23.398,
+    "duration_s": 0.4,
+    "missing_samples_count": 200,
+    "percentage_of_session": 0.444,
+    "nominal_sampling_interval_ms": 2.0,
+    "imputation_method": "Linear interpolation",
+    "riding_state_during_dropout": "Stable ground straightaway between Jump 2 and Jump 3",
+    "interpolation_error_bounds": {
+      "rmse_accel_z_ms2": 0.124,
+      "max_residual_ms2": 0.281,
+      "spectral_distortion_db": 0.02
+    }
+  }
+}

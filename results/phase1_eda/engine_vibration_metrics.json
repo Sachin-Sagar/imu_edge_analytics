@@ -1,0 +1,21 @@
+{
+  "powertrain": "Single-cylinder 2-stroke internal combustion engine",
+  "nominal_engine_speed_rpm": 3486.6,
+  "fundamental_frequency_hz": 58.11,
+  "second_harmonic_hz": 116.21,
+  "sagittal_polarization": {
+    "cylinder_axis_tilt_deg": 56.7,
+    "longitudinal_vertical_cross_correlation_rxz": 0.985,
+    "sagittal_plane_power_fraction": 0.962,
+    "lateral_attenuation_db": 18.24
+  },
+  "gyroscope_immunity": {
+    "vibration_leakage_detected": false,
+    "noise_floor_db_per_hz": -65.3,
+    "isolation_mechanism": "Chassis torsional decoupling and MEMS Coriolis demodulation reject linear translation"
+  },
+  "flight_modulation": {
+    "airborne_power_drop_db": 16.2,
+    "airborne_throttle_state": "Throttle cut / wheel uncoupling during ballistic trajectory"
+  }
+}

@@ -1,0 +1,7 @@
+channel,unit,mean,std,median,iqr,min,max,skewness,excess_kurtosis,description
+accel_x,m/s^2,0.0001,0.1011,0.0008,0.1390,-0.3339,0.3288,0.0043,-0.3319,Forward acceleration
+accel_y,m/s^2,0.0001,0.0602,0.0002,0.0924,-0.2053,0.2129,-0.0016,-0.6996,Lateral acceleration
+accel_z,m/s^2,7.8172,3.9661,9.7347,0.4456,-0.4690,18.6594,-1.4444,0.1571,Vertical acceleration
+gyro_x,rad/s,-0.0001,0.0358,-0.0003,0.0693,-0.0726,0.0706,0.0035,-1.4095,Roll rate
+gyro_y,rad/s,0.1184,0.6554,0.0108,0.0471,-0.0489,8.0000,11.2279,131.7628,Pitch rate
+gyro_z,rad/s,0.1025,0.1600,0.0134,0.2408,-0.0350,0.4542,1.0646,-0.6186,Yaw rate
