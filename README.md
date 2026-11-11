@@ -97,7 +97,7 @@ edge-imu-motion-analytics/
 │   ├── 02_Jump_Detection.ipynb                # Ballistic free-fall jump detection & air times
 │   ├── 03_Filter_and_PSD.ipynb                # Ground PSD & Butterworth LP filter synthesis
 │   ├── 04_Downsampling.ipynb                  # Multi-rate decimation sweep & Anti-Aliasing Filter
-│   ├── 05_Throttle_to_RPM_and_Vibration_Dynamics.ipynb # Throttle & braking ODE, fork dive, mid-air brake tap & 3D vibration injection
+│   ├── 05_Data_Generating_Process.ipynb # Data Generating Process: Throttle & braking ODE, fork dive, mid-air brake tap & 3D vibration injection
 │   ├── [ADVANCED RESEARCH & KINEMATICS SUITE]
 │   ├── Filter_and_PSD_extended.ipynb          # Extended: SysID ARX, Kalman filter, and SOS latency
 │   └── EDA_and_Downsampling_extended.ipynb    # Extended: 3D polarization, battery model, shock smearing

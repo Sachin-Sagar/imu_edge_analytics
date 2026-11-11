@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Generator for notebooks/05_Throttle_to_RPM_and_Vibration_Dynamics.ipynb
+Generator for notebooks/05_Data_Generating_Process.ipynb
 Models dynamic engine RPM from synchronized rider throttle and braking inputs,
 simulates multi-regime drivetrain load, fork dive pitch dynamics, and injects
 non-stationary 6-axis kinematics and powertrain vibration into chassis IMU telemetry.
@@ -20,7 +20,7 @@ def create_notebook():
         'cell_type': 'markdown',
         'metadata': {},
         'source': [
-            "# Realistic Powertrain & Chassis Dynamics: Throttle, Braking & Engine RPM Simulation with 6-Axis IMU Kinematic Injection\n",
+            "# Data Generating Process: Throttle-to-RPM ODE, Braking Dynamics & 6-Axis IMU Kinematic Telemetry Injection\n",
             "**Edge IMU Motion Analytics & Vibration DSP Engine**  \n",
             "**Author**: Sachin Sagar  \n",
             "**Domain**: Powertrain Rotational Mechanics, Braking Kinematics, Suspension Fork Dive & IMU Telemetry Synthesis  \n",
@@ -937,7 +937,7 @@ def create_notebook():
         'nbformat_minor': 4
     }
     
-    out_path = 'notebooks/05_Throttle_to_RPM_and_Vibration_Dynamics.ipynb'
+    out_path = 'notebooks/05_Data_Generating_Process.ipynb'
     with open(out_path, 'w', encoding='utf-8') as f:
         json.dump(nb, f, indent=1)
     print(f"Successfully generated: {out_path}")

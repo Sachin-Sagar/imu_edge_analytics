@@ -113,7 +113,7 @@ def main():
         'notebooks/02_Jump_Detection.ipynb',
         'notebooks/03_Filter_and_PSD.ipynb',
         'notebooks/04_Downsampling.ipynb',
-        'notebooks/05_Throttle_to_RPM_and_Vibration_Dynamics.ipynb',
+        'notebooks/05_Data_Generating_Process.ipynb',
         'notebooks/Filter_and_PSD_extended.ipynb',
         'notebooks/EDA_and_Downsampling_extended.ipynb'
     ]
