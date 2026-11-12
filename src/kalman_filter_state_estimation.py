@@ -285,10 +285,8 @@ def run_kalman_experiment():
     out_dir = 'results/phase3_filter_design'
     plot_dir = os.path.join(out_dir, 'plots')
     global_plot_dir = 'plots/objective2'
-    artifact_plot_dir = '/home/sac/.gemini/antigravity/brain/5765acb8-7590-4d9c-a72c-e2f690a727df/plots'
     os.makedirs(plot_dir, exist_ok=True)
     os.makedirs(global_plot_dir, exist_ok=True)
-    os.makedirs(artifact_plot_dir, exist_ok=True)
     
     # 5.1 Telemetry Ingestion
     data, header = load_and_impute('mx_imu.csv')
@@ -486,7 +484,6 @@ def run_kalman_experiment():
     fig10_name = '10_kalman_vs_physics_bode_comparison.png'
     fig.savefig(os.path.join(plot_dir, fig10_name), dpi=300)
     fig.savefig(os.path.join(global_plot_dir, fig10_name), dpi=300)
-    fig.savefig(os.path.join(artifact_plot_dir, fig10_name), dpi=300)
     plt.close(fig)
     print(f"Saved Figure 10: {os.path.join(plot_dir, fig10_name)}")
     
@@ -526,7 +523,6 @@ def run_kalman_experiment():
     fig11_name = '11_kalman_vs_physics_time_landing_shock.png'
     fig.savefig(os.path.join(plot_dir, fig11_name), dpi=300)
     fig.savefig(os.path.join(global_plot_dir, fig11_name), dpi=300)
-    fig.savefig(os.path.join(artifact_plot_dir, fig11_name), dpi=300)
     plt.close(fig)
     print(f"Saved Figure 11: {os.path.join(plot_dir, fig11_name)}")
     
@@ -576,7 +572,6 @@ def run_kalman_experiment():
     fig12_name = '12_kalman_vs_physics_psd_comparison.png'
     fig.savefig(os.path.join(plot_dir, fig12_name), dpi=300)
     fig.savefig(os.path.join(global_plot_dir, fig12_name), dpi=300)
-    fig.savefig(os.path.join(artifact_plot_dir, fig12_name), dpi=300)
     plt.close(fig)
     print(f"Saved Figure 12: {os.path.join(plot_dir, fig12_name)}")
     

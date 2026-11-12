@@ -1,7 +1,7 @@
 # Phase 3: Objective 2 — Power Spectral Density & Filter Design Report
 
 **Task**: Objective 2 (Filter Design & Spectral Analysis)  
-**Author**: Quin Motion Algorithm Engineer  
+**Author**: Sachin Sagar (Edge IMU Motion Analytics Engine)  
 **Dataset**: `mx_imu.csv` (6-axis IMU @ 500 Hz nominal, 90 seconds)  
 **Output Directory**: `results/phase3_filter_design/`  
 
@@ -30,12 +30,12 @@ $$t \in [11.000, 17.000]\,	ext{s} \quad (N = 3,001\,	ext{samples}, \Delta t = 6.
 
 | Channel | Axis / Description | Fund. Freq ($f_1$) | Fund. PSD [dB/Hz] | 2nd Harm ($f_2$) | Harm. PSD [dB/Hz] | Vibration Coupling Level |
 | :---: | :---: | :---: | :---: | :---: | :---: | :--- |
-| `accel_x` | $a_x$ (Forward) | **58.11 Hz** | **-24.85 dB** | **116.21 Hz** | **-31.44 dB** | Severe (Direct Ingress) |
-| `accel_y` | $a_y$ (Lateral) | **63.96 Hz** | **-50.06 dB** | **120.12 Hz** | **-50.65 dB** | Low (Cross-Axis Leakage) |
-| `accel_z` | $a_z$ (Vertical) | **58.11 Hz** | **-21.11 dB** | **116.21 Hz** | **-27.83 dB** | Severe (Direct Ingress) |
-| `gyro_x` | $\omega_x$ (Roll) | **63.96 Hz** | **-65.34 dB** | **120.61 Hz** | **-64.26 dB** | None (Sensor Noise Floor) |
-| `gyro_y` | $\omega_y$ (Pitch) | **62.50 Hz** | **-65.53 dB** | **121.58 Hz** | **-67.35 dB** | None (Sensor Noise Floor) |
-| `gyro_z` | $\omega_z$ (Yaw) | **64.94 Hz** | **-68.32 dB** | **119.63 Hz** | **-68.72 dB** | None (Sensor Noise Floor) |
+| `accel_x` | $a_x$ (Forward) | **57.62 Hz** | **-44.18 dB** | **124.51 Hz** | **-39.49 dB** | Low (Cross-Axis Leakage) |
+| `accel_y` | $a_y$ (Lateral) | **60.55 Hz** | **-47.70 dB** | **125.00 Hz** | **-46.87 dB** | Low (Cross-Axis Leakage) |
+| `accel_z` | $a_z$ (Vertical) | **60.06 Hz** | **-40.48 dB** | **124.51 Hz** | **-35.49 dB** | Low (Cross-Axis Leakage) |
+| `gyro_x` | $\omega_x$ (Roll) | **60.06 Hz** | **-52.81 dB** | **121.58 Hz** | **-52.08 dB** | Low (Cross-Axis Leakage) |
+| `gyro_y` | $\omega_y$ (Pitch) | **62.50 Hz** | **-52.61 dB** | **111.82 Hz** | **-51.36 dB** | Low (Cross-Axis Leakage) |
+| `gyro_z` | $\omega_z$ (Yaw) | **55.18 Hz** | **-53.48 dB** | **115.23 Hz** | **-52.99 dB** | Low (Cross-Axis Leakage) |
 
 
 ### 2.3 Physical Transducer Mechanism: Accelerometer Contamination vs Gyroscope Immunity
@@ -139,7 +139,7 @@ In the time domain, filtering strips away the dense, high-frequency $\pm 4\,\tex
 Depending on the deployment architecture (embedded edge trigger vs post-session cloud analytics), two filtering modes are available:
 1. **Causal Single-Pass Filtering (`sosfilt_df2t`)**:
    - Realized in Direct Form II Transposed biquad sections requiring only 4 internal state registers per channel (minimal RAM).
-   - Introduces an intrinsic group delay of $\tau_g \approx 18-24\,\mathrm{ms}$ (measured edge latency: **16.0 ms**, or $\approx 9$ samples at $500\,\mathrm{Hz}$).
+   - Introduces an intrinsic group delay of $\tau_g \approx 18-24\,\mathrm{ms}$ (measured edge latency: **18.0 ms**, or $\approx 9$ samples at $500\,\mathrm{Hz}$).
    - Suitable for real-time safety triggers, airbag deployment, or embedded live telemetry streaming.
 2. **Zero-Phase Forward-Backward Filtering (`filtfilt_sos`)**:
    - Employs odd reflection padding and bidirectional filtering to cancel all phase delay ($\tau_g = 0.0\,\text{ms}$, $\Delta\phi = 0^\circ$).

@@ -76,7 +76,7 @@ def run_filters(data):
         theta_naive[k] = alpha * (theta_naive[k-1] + np.degrees(gy[k] * dt)) + (1.0 - alpha) * theta_acc[k]
         
     # Airborne state detection using vertical acceleration boxcar filter
-    from src.jump_detector import detect_jumps
+    from src.detect_jumps_and_airtime import detect_jumps
     jumps, state, _ = detect_jumps(t, az, fs=fs)
     
     # Model C: State-Switched Complementary Filter (freeze accel correction in free-fall)

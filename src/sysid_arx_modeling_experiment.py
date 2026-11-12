@@ -195,10 +195,8 @@ def run_sysid_experiment():
     out_dir = 'results/phase3_filter_design'
     plot_dir = os.path.join(out_dir, 'plots')
     global_plot_dir = 'plots/objective2'
-    artifact_plot_dir = '/home/sac/.gemini/antigravity/brain/5765acb8-7590-4d9c-a72c-e2f690a727df/plots'
     os.makedirs(plot_dir, exist_ok=True)
     os.makedirs(global_plot_dir, exist_ok=True)
-    os.makedirs(artifact_plot_dir, exist_ok=True)
     
     # 4.1 Load Data & Ground Segment
     data, header = load_and_impute('mx_imu.csv')
@@ -401,7 +399,6 @@ def run_sysid_experiment():
     f7_path = os.path.join(plot_dir, '07_sysid_vs_physics_bode_comparison.png')
     plt.savefig(f7_path, dpi=300)
     plt.savefig(os.path.join(global_plot_dir, '07_sysid_vs_physics_bode_comparison.png'), dpi=300)
-    plt.savefig(os.path.join(artifact_plot_dir, '07_sysid_vs_physics_bode_comparison.png'), dpi=300)
     plt.close()
     print(f"Saved Figure 7: {f7_path}")
     
@@ -457,7 +454,6 @@ def run_sysid_experiment():
     f8_path = os.path.join(plot_dir, '08_sysid_vs_physics_time_landing_shock.png')
     plt.savefig(f8_path, dpi=300)
     plt.savefig(os.path.join(global_plot_dir, '08_sysid_vs_physics_time_landing_shock.png'), dpi=300)
-    plt.savefig(os.path.join(artifact_plot_dir, '08_sysid_vs_physics_time_landing_shock.png'), dpi=300)
     plt.close()
     print(f"Saved Figure 8: {f8_path}")
     
@@ -500,7 +496,6 @@ def run_sysid_experiment():
     f9_path = os.path.join(plot_dir, '09_sysid_vs_physics_psd_comparison.png')
     plt.savefig(f9_path, dpi=300)
     plt.savefig(os.path.join(global_plot_dir, '09_sysid_vs_physics_psd_comparison.png'), dpi=300)
-    plt.savefig(os.path.join(artifact_plot_dir, '09_sysid_vs_physics_psd_comparison.png'), dpi=300)
     plt.close()
     print(f"Saved Figure 9: {f9_path}")
     

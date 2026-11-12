@@ -6,7 +6,11 @@ into standalone HTML documents with LaTeX math rendering and responsive styling.
 """
 import os
 import sys
-import markdown
+try:
+    import markdown
+except ImportError:
+    sys.path.append('/usr/lib/python3/dist-packages')
+    import markdown
 
 def render_md_to_html(md_path, html_path, title="Motocross Jump Analytics Report"):
     """Render a markdown file to a standalone styled HTML file."""

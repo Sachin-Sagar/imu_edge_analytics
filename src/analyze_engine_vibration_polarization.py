@@ -168,9 +168,8 @@ def plot_6axis_psd(data, header, out_dir):
     ax_gyr.set_ylim([5e-8, 5e-3])
 
     plt.tight_layout()
-    for d in [out_dir, 'plots']:
-        os.makedirs(d, exist_ok=True)
-        fig.savefig(os.path.join(d, '06_engine_noise_psd_6axis.png'), dpi=300)
+    os.makedirs(out_dir, exist_ok=True)
+    fig.savefig(os.path.join(out_dir, '06_engine_noise_psd_6axis.png'), dpi=300)
     plt.close(fig)
     print("Saved 06_engine_noise_psd_6axis.png")
 
@@ -249,9 +248,8 @@ def plot_spectrogram_waterfall(data, out_dir):
     ax_comp.set_ylim([-70, 0])
 
     plt.tight_layout()
-    for d in [out_dir, 'plots']:
-        os.makedirs(d, exist_ok=True)
-        fig.savefig(os.path.join(d, '07_engine_noise_spectrogram_waterfall.png'), dpi=300)
+    os.makedirs(out_dir, exist_ok=True)
+    fig.savefig(os.path.join(out_dir, '07_engine_noise_spectrogram_waterfall.png'), dpi=300)
     plt.close(fig)
     print("Saved 07_engine_noise_spectrogram_waterfall.png")
 
@@ -358,9 +356,8 @@ def plot_vibration_kinematics_polar(data, out_dir):
     ax_bar.set_ylim([0, 0.22])
 
     plt.tight_layout()
-    for d in [out_dir, 'plots']:
-        os.makedirs(d, exist_ok=True)
-        fig.savefig(os.path.join(d, '08_engine_vibration_kinematics_polar.png'), dpi=300)
+    os.makedirs(out_dir, exist_ok=True)
+    fig.savefig(os.path.join(out_dir, '08_engine_vibration_kinematics_polar.png'), dpi=300)
     plt.close(fig)
     print("Saved 08_engine_vibration_kinematics_polar.png")
 

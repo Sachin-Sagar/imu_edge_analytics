@@ -6,10 +6,10 @@
     "attenuation_58hz_db": -30.61,
     "attenuation_116hz_db": -60.17,
     "group_delay_10hz_ms": 17.87,
-    "takeoff_edge_delay_ms": 20.0,
-    "landing_shock_peak_ms2": 17.31,
+    "takeoff_edge_delay_ms": 24.0,
+    "landing_shock_peak_ms2": 17.94,
     "landing_shock_delay_ms": 20.0,
-    "ground_residual_std_ms2": 0.18
+    "ground_residual_std_ms2": 0.05
   },
   "data_driven_sysid_notch": {
     "type": "Parametric SysID Biquad Dual-Notch (58.11 Hz & 116.21 Hz)",
@@ -19,8 +19,8 @@
     "attenuation_116hz_db": -58.38,
     "group_delay_10hz_ms": 0.94,
     "takeoff_edge_delay_ms": 0.0,
-    "landing_shock_peak_ms2": 18.2,
+    "landing_shock_peak_ms2": 19.41,
     "landing_shock_delay_ms": -2.0,
-    "ground_residual_std_ms2": 0.186
+    "ground_residual_std_ms2": 0.149
   }
 }
